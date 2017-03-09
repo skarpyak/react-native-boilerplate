@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { NavigationExperimental } from 'react-native';
 import { connect } from 'react-redux';
 
-import Home from './Home';
-import Counter from './Counter';
+import Services from './Services';
+import Service from './Service';
 
 const { CardStack } = NavigationExperimental;
 
@@ -23,10 +23,10 @@ export default class Router extends Component {
 
   renderScene = props => {
     switch (props.scene.key) {
-      case 'scene_home':
-        return <Home navigate={this.handleNavigation} />;
-      case 'scene_counter':
-        return <Counter navigate={this.handleNavigation} />;
+      case 'scene_services':
+        return <Services navigate={this.handleNavigation} />;
+      case 'scene_service':
+        return <Service navigate={this.handleNavigation} />;
       default:
         return null;
     }
