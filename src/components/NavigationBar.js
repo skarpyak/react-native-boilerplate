@@ -33,28 +33,36 @@ const styles = StyleSheet.create({
   toolbar: {
     width: Dimensions.get('window').width,
     height: 50,
-    paddingTop:5,
-    paddingBottom:5,
+    paddingTop:10,
+    paddingBottom:10,
     flexDirection:'row',
     justifyContent: 'space-between',
     borderBottomWidth: 5,
     borderBottomColor: constants.colors.black
   },
   title: {
-
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: Dimensions.get('window').width/3,
   },
   leftButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: Dimensions.get('window').width/3,
     paddingLeft: 10
   },
   rightButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    width: Dimensions.get('window').width/3,
     paddingRight: 10
   },
   actionText: {
-    fontSize: 14,
+    fontSize: 20,
     color: constants.colors.cabaret
   },
   text: {
-    fontSize: 14,
+    fontSize: 20,
     color: constants.colors.white
   },
 });

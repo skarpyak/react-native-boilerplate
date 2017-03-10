@@ -3,6 +3,7 @@ import services from '../models/services.json'
 export const SERVICE_ITEMS_LOAD = 'SERVICE_ITEMS_LOAD'
 export const SERVICE_ITEM_ADD = 'SERVICE_ITEM_ADD'
 export const SERVICE_ITEM_EDIT = 'SERVICE_ITEM_EDIT'
+export const SERVICE_ITEM_CHANGE = 'SERVICE_ITEM_CHANGE'
 export const SERVICE_ITEM_SAVE = 'SERVICE_ITEM_SAVE'
 
 /**
@@ -10,6 +11,13 @@ export const SERVICE_ITEM_SAVE = 'SERVICE_ITEM_SAVE'
  */
 export function loadData() {
   return {type: SERVICE_ITEMS_LOAD, data: services}
+}
+
+/**
+ * load services
+ */
+export function changeItem(item) {
+  return {type: SERVICE_ITEM_CHANGE, data: item}
 }
 
 /**
@@ -32,5 +40,5 @@ export function editItem(id) {
  * @param {object} item The service item
  */
 export function saveItem(item) {
-  return {type: SERVICE_ITEM_SAVE, item}
+  return {type: SERVICE_ITEM_SAVE, data: item}
 }

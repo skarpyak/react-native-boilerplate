@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  Dimensions,
+  Image,
   StyleSheet,
   Text,
-  View,
-  ListView,
+  TextInput,
   TouchableOpacity,
-  Dimensions,
-  Image
+  View
 } from 'react-native';
 import * as servicesActions from '../actions/services';
 import constants from '../utils/constants';
@@ -17,7 +17,7 @@ import NavigationBar from '../components/NavigationBar';
 
 @connect(
   state => ({
-    services: state.services
+    ...state.services
   }),
   dispatch => bindActionCreators(servicesActions, dispatch)
 )
@@ -26,6 +26,13 @@ export default class Services extends Component {
   static propTypes = {
     navigate: PropTypes.func.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      filter: '',
+    };
+  }
 
   componentDidMount() {
     let { loadData, isLoaded } = this.props;
@@ -55,24 +62,33 @@ export default class Services extends Component {
   }
 
   render() {
-    const { services } = this.props.services;
-    console.log("services", services);
+    const { services } = this.props;
+    const { filter } = this.state;
 
-    const rightButtonConfig = {
-      title: 'Next',
-      handler: () => alert('hello!'),
-    };
-
-    const titleConfig = {
-      title: 'Services',
-    };
+    const filterdServices = services.filter((item) => {
+      if(!filter) {
+        return true;
+      } else if((item.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0) ||
+         (item.category.toLowerCase().indexOf(filter.toLowerCase()) >= 0)) {
+        return true;
+      }
+      return false;
+    })
 
     return (
       <View style={styles.container}>
-        <NavigationBar title="Services" rightButtonConfig={{title: 'Add', handler: this.addItem}} />
+        <NavigationBar title={constants.labels.services.navigationBar.title}
+                       rightButtonConfig={{title: constants.labels.services.navigationBar.addButtonLabel, handler: this.addItem}} />
+        <TextInput
+          style={styles.filter}
+          onChangeText={(filter) => this.setState({filter})}
+          value={this.state.text}
+          placeholder={constants.labels.services.search.placeholder}
+          placeholderTextColor={constants.colors.tuna}
+        />
         <View style={styles.body}>
           {
-            services.map((item) => <ListItem key={item.id} item={item} onPress={this.editItem.bind(this, item.id)} />)
+            filterdServices.map((item) => <ListItem key={item.id} item={item} onPress={this.editItem.bind(this, item.id)} />)
           }
         </View>
       </View>
@@ -88,9 +104,16 @@ const styles = StyleSheet.create({
     backgroundColor: constants.colors.maire,
   },
   body: {
-    flex: 1
+    flex: 1,
+    width: Dimensions.get('window').width,
   },
-
+  filter: {
+    width: Dimensions.get('window').width,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    color: constants.colors.white
+  },
   header: {
     fontSize: 14,
     textAlign: 'center',
