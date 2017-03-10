@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import {
   Dimensions,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -86,11 +87,11 @@ export default class Services extends Component {
           placeholder={constants.labels.services.search.placeholder}
           placeholderTextColor={constants.colors.tuna}
         />
-        <View style={styles.body}>
+        <ScrollView style={styles.body}>
           {
             filterdServices.map((item) => <ListItem key={item.id} item={item} onPress={this.editItem.bind(this, item.id)} />)
           }
-        </View>
+        </ScrollView>
       </View>
     );
   }
